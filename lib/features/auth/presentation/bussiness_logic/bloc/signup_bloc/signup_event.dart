@@ -7,26 +7,38 @@ abstract class SignupEvent extends Equatable {
 }
 
 class SignupButtonPressed extends SignupEvent {
-  final String username;
+  final String? username;
   final String email;
   final String password;
-  final String phone;
-  final String chipId;
+  final String? phone;
 
-  const SignupButtonPressed(
-      {required this.username,
-      required this.email,
-      required this.password,
-      required this.phone,
-      required this.chipId});
+  const SignupButtonPressed({
+    this.username,
+    required this.email,
+    required this.password,
+    this.phone,
+  });
 
   @override
   // TODO: implement props
   List<Object> get props => [];
   @override
-  String toString() =>
-      'SignupButtonPressed {username: $username, phone: $phone, email: $email, chipId: $chipId }';
+  String toString() => """
+  SignupButtonPressed {
+    ${username == null ? "" : "username: $username"}
+    ${"email: $email"}
+    ${"password: $password"}
+    ${phone == null ? "" : "phone: $phone"}
+  }
+  """;
 }
+//       'SignupButtonPressed {
+//         ${username==null?"":"username: "+username+"}",
+//          phone: $phone,
+//           email: $email,
+//            chipId: $chipId
+//             }';
+// }
 
 
 

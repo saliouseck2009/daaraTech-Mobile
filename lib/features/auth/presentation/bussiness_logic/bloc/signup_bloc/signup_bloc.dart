@@ -1,8 +1,10 @@
-import 'package:auth_template/features/auth/bussiness_logic/bloc/signup_bloc/signup_event.dart';
-import 'package:auth_template/features/auth/bussiness_logic/bloc/signup_bloc/signup_state.dart';
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/repository/repositories.dart';
+import '../../../../presentation/bussiness_logic/bloc/signup_bloc/signup_event.dart';
+import '../../../../presentation/bussiness_logic/bloc/signup_bloc/signup_state.dart';
+import '../../../../data/repository/repositories.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final UserRepository userRepository;
@@ -15,12 +17,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     emit(SignupLoading());
 
     try {
-      var response = await userRepository.signUp(
-          username: event.username,
-          password: event.password,
-          chipId: event.chipId,
-          email: event.email,
-          phone: event.phone);
+      log(event.toString());
+      Future.delayed(const Duration(seconds: 3));
+      // var response = await userRepository.signUp(
+      //     username: event.username,
+      //     password: event.password,
+      //     email: event.email,
+      //     phone: event.phone);
       String reponse = "inscription réussi";
       emit(SignupSuccess(reponse: reponse));
     } catch (error) {

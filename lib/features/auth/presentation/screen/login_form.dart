@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/widgets/loading_widget.dart';
 import '../../../../themes/theme.dart';
-import '../../bussiness_logic/bloc/login_bloc/login.dart';
-import '../../bussiness_logic/bloc/login_bloc/login_state.dart';
-import '../../bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
+import '../../presentation/bussiness_logic/bloc/login_bloc/login.dart';
+import '../../presentation/bussiness_logic/bloc/login_bloc/login_state.dart';
+import '../../presentation/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
 import '../../data/repository/repositories.dart';
 import 'signup_screen.dart';
 
@@ -44,7 +44,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           onPressed: _onLoginButtonPressed,
           child: Text("LOG IN",
-              style: new TextStyle(
+              style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)));
@@ -68,10 +68,10 @@ class _LoginFormState extends State<LoginForm> {
                       //padding: EdgeInsets.only(bottom: 20.0, top: 40.0),
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Image(
                         fit: BoxFit.fill,
-                        image: AssetImage('assets/images/baj3n.png'),
+                        image: AssetImage('assets/images/DaaraScience.png'),
                       ),
                       SizedBox(
                         height: 5.0,
@@ -79,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
                       Text(
                         "Connectez vous",
                         style: TextStyle(
-                            fontSize: 10.0, color: CustomColors.mainColor),
+                            fontSize: 30.0, color: CustomColors.mainColor),
                       )
                     ],
                   )),
@@ -98,8 +98,8 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: new InkWell(
-                        child: new Text(
+                    child: InkWell(
+                        child: Text(
                           "Forget password?",
                           style:
                               TextStyle(color: Colors.black45, fontSize: 12.0),
@@ -156,7 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                                   width: 5.0,
                                 ),
                                 Text("Facebook",
-                                    style: new TextStyle(
+                                    style:  TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),
@@ -185,7 +185,7 @@ class _LoginFormState extends State<LoginForm> {
                                   width: 5.0,
                                 ),
                                 Text("Google",
-                                    style: new TextStyle(
+                                    style:  TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),
@@ -279,10 +279,10 @@ class passwordTextFormField extends StatelessWidget {
         fillColor: Colors.white,
         prefixIcon: Icon(Icons.lock_outline, color: CustomColors.mainColor),
         enabledBorder: OutlineInputBorder(
-            borderSide: new BorderSide(color: CustomColors.mainColor),
+            borderSide: BorderSide(color: CustomColors.mainColor),
             borderRadius: BorderRadius.circular(30.0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: new BorderSide(color: CustomColors.mainColor),
+            borderSide: BorderSide(color: CustomColors.mainColor),
             borderRadius: BorderRadius.circular(30.0)),
         contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
         labelText: "Password",
@@ -322,10 +322,10 @@ class _usernameTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person, color: CustomColors.mainColor),
         enabledBorder: OutlineInputBorder(
-            borderSide: new BorderSide(color: CustomColors.mainColor),
+            borderSide: BorderSide(color: CustomColors.mainColor),
             borderRadius: BorderRadius.circular(30.0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: new BorderSide(color: CustomColors.mainColor),
+            borderSide: BorderSide(color: CustomColors.mainColor),
             borderRadius: BorderRadius.circular(30.0)),
         contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
         labelText: "Username",

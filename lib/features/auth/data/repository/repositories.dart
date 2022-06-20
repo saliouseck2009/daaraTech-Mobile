@@ -74,15 +74,14 @@ class UserRepository {
     return userInfo;
   }
 
-  Future<void> signUp(
-      {required username,
-      email,
-      required password,
-      phone,
-      required chipId}) async {
+  Future<void> signUp({
+    required username,
+    email,
+    required password,
+    phone,
+  }) async {
     Response response = await _dio.post(signupUrl, data: {
       "userName": username,
-      "chipId": chipId,
       "email": email,
       "password": password,
       "phone": phone,

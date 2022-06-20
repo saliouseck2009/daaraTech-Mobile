@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 class CustomColors {
   const CustomColors();
   //static const Color mainColor = const Color(0x174ED6);
-  static const Color mainColor = const Color(0xFF1877f2);
-  static const Color background = const Color(0xFFf2f6ff);
+  static const Color mainColor = const Color(0xFF005E23);
+  static const Color background = const Color(0xFF011922);
   static const Color loginGradientStart = const Color(0xFF59499E);
   static const Color loginGradientEnd = const Color(0xFF59499E);
   static const Color successGreen = const Color(0xFF32CD32);
-  static const Color secondaryColor = const Color(0xFFffa302);
-  static const Color thirdColor = const Color(0xFFFFD684);
+  static const Color secondaryColor = const Color(0xFF8DF900);
+  static const Color thirdColor = const Color(0xFF011922);
   static const Color fourthColor = const Color(0xFF8FDCFF);
   static const Color elementBack = const Color(0xfff1efef);
   static const Color titleColor = const Color(0xFF061857);

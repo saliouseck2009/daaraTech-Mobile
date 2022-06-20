@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:auth_template/features/auth/bussiness_logic/bloc/auth_bloc/auth_event.dart';
+import 'package:auth_template/features/auth/data/models/user_info.dart';
+import 'package:auth_template/features/auth/presentation/bussiness_logic/bloc/auth_bloc/auth_event.dart';
+import 'package:auth_template/locator.dart';
 import 'package:bloc/bloc.dart';
-import '../../../../../locator.dart';
-import '../../../data/models/user_info.dart';
-import '../../../data/repository/repositories.dart';
+import '../../../../data/repository/repositories.dart';
 import '../auth_bloc/auth_bloc.dart';
 import 'login.dart';
 

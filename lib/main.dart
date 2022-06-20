@@ -1,8 +1,8 @@
 import 'package:auth_template/routeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/auth/bussiness_logic/bloc/auth_bloc/auth.dart';
-import 'features/auth/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
+import 'features/auth/presentation/bussiness_logic/bloc/auth_bloc/auth.dart';
+import 'features/auth/presentation/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
 import 'features/auth/data/repository/repositories.dart';
 import 'features/auth/presentation/screen/login_screen.dart';
 import 'features/main-page.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: RouteGenerator.generateRoute,
           theme: ThemeData(
             fontFamily: 'Rubik',
-            primarySwatch: Colors.blueGrey,
+            primarySwatch: Colors.green,
           ),
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {

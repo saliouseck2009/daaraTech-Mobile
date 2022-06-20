@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bussiness_logic/bloc/signup_bloc/signup.dart';
+import '../../presentation/bussiness_logic/bloc/signup_bloc/signup.dart';
 import '../../data/repository/repositories.dart';
 import 'signup_form.dart';
 
@@ -17,8 +17,8 @@ class SignupScreen extends StatelessWidget {
           );
         },
         child: SignupForm(
-          userRepository: context.read<UserRepository>(),
-        ),
+            // userRepository: context.read<UserRepository>(),
+            ),
       ),
     );
   }

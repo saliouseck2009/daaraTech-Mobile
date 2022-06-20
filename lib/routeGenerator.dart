@@ -1,7 +1,7 @@
 import 'package:auth_template/features/auth/data/repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/auth/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
+import 'features/auth/presentation/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
 import 'features/auth/presentation/screen/signup_screen.dart';
 import 'features/main-page.dart';
 

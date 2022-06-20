@@ -1,7 +1,6 @@
 import 'dart:async';
+import 'package:auth_template/features/auth/data/repository/repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
-import '../../../data/repository/repositories.dart';
 import 'auth.dart';
 
 class AuthenticationBloc
