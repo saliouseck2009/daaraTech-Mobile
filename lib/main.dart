@@ -1,6 +1,8 @@
 import 'package:auth_template/routeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'bloc_observer.dart';
 import 'features/auth/presentation/bussiness_logic/bloc/auth_bloc/auth.dart';
 import 'features/auth/presentation/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
 import 'features/auth/data/repository/repositories.dart';
@@ -10,7 +12,21 @@ import 'locator.dart';
 import 'themes/theme.dart';
 
 Future<void> main() async {
-  await setup();
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://5310c11a972547d8b7081faa7161551a@o1303341.ingest.sentry.io/6542203';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(MyApp()),
+  );
+
+  // await setup();
+  // BlocOverrides.runZoned(() {
+  //   runApp(const MyApp());
+  // }, blocObserver: SimpleBlocObserver());
 
   runApp(const MyApp());
 }

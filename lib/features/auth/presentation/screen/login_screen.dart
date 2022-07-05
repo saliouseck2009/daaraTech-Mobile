@@ -6,6 +6,7 @@ import '../../presentation/bussiness_logic/bloc/login_bloc/login.dart';
 import 'login_form.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const routeName = "/login";
   const LoginScreen({
     Key? key,
   });

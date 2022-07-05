@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auth_template/features/auth/presentation/widgets/utils_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/utils.dart';
@@ -7,23 +8,19 @@ import 'package:get/utils.dart';
 import '../../../../shared/widgets/loading_widget.dart';
 import '../../../../themes/theme.dart';
 import '../../presentation/bussiness_logic/bloc/signup_bloc/signup.dart';
+import '../widgets/custom_text_form_field.dart';
 
 class SignupForm extends StatelessWidget {
-  SignupForm();
+  SignupForm({Key? key}) : super(key: key);
   final _formKeySignUp = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
-  final _chipIdController = TextEditingController();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
   _onSignupButtonPressed(
       {required BuildContext context, required GlobalKey<FormState> key}) {
-    log(_emailController.text);
-    log(_passwordController.text);
-    log(_usernameController.text);
-    log(_phoneController.text);
-    print(key);
+    log("TRIGGERED");
     if (key.currentState!.validate()) {
       BlocProvider.of<SignupBloc>(context).add(
         SignupButtonPressed(
@@ -41,18 +38,10 @@ class SignupForm extends StatelessWidget {
     return BlocListener<SignupBloc, SignupState>(
       listener: (context, state) {
         if (state is SignupFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Incription échoué "),
-              backgroundColor: Colors.red,
-            ),
-          );
+            UtilsScreen.CustomSnackbar(context: context, description: state.error, colorBackground: CustomColors.red, textType: 'Error',);
         } else if (state is SignupSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Inscription réussi'),
-            backgroundColor: Colors.green,
-          ));
-          // return Navigator.of(context).pop();
+          Navigator.pop(context);
+          UtilsScreen.CustomSnackbar(context: context, description: "incription effectuée avec succés", colorBackground: CustomColors.successGreen, textType: 'Succes',);
         }
       },
       child: BlocBuilder<SignupBloc, SignupState>(
@@ -76,29 +65,13 @@ class SignupForm extends StatelessWidget {
                       Text(
                         "Connectez - vous",
                         style: TextStyle(
-                            fontSize: 30.0, color: CustomColors.mainColor),
+                            fontSize: 25.0, color: CustomColors.mainColor),
                       )
                     ],
                   ),
                   const SizedBox(
                     height: 30.0,
                   ),
-                  //_usernameTextFormField(),
-                  // CustomTextFormField(
-                  //   icon: null,
-                  //   keyboardType: TextInputType.number,
-                  //   label: "Username",
-                  //   controller: _phoneController,
-                  //   textInputAction: TextInputAction.done,
-                  // ),
-                  // const SizedBox(
-                  //   height: 20.0,
-                  // ),
-                  //_chipIdTextFormField(),
-                  // const SizedBox(
-                  //   height: 20.0,
-                  // ),
-                  // _emailTextFormField(),
                   CustomTextFormField(
                     icon:
                         const Icon(Icons.email, color: CustomColors.mainColor),
@@ -158,7 +131,7 @@ class SignupForm extends StatelessWidget {
                     height: 30.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
@@ -171,7 +144,7 @@ class SignupForm extends StatelessWidget {
                                         primary: CustomColors.mainColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(30.0),
+                                              BorderRadius.circular(5.0),
                                         )),
                                     onPressed: () => _onSignupButtonPressed(
                                         key: _formKeySignUp, context: context),
@@ -186,37 +159,35 @@ class SignupForm extends StatelessWidget {
                   const SizedBox(
                     height: 40.0,
                   ),
-                  Container(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          padding: EdgeInsets.only(bottom: 30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Already have an account?",
-                                style: TextStyle(color: CustomColors.grey),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 5.0),
-                              ),
-                              GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    "Connexion",
-                                    style: TextStyle(
-                                        color: CustomColors.mainColor,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          )),
-                    ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Already have an account?",
+                              style: TextStyle(color: CustomColors.grey),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 5.0),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  "Connexion",
+                                  style: TextStyle(
+                                      color: CustomColors.mainColor,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                          ],
+                        )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   )
                 ],
@@ -228,224 +199,169 @@ class SignupForm extends StatelessWidget {
     );
   }
 
-  TextFormField _usernameTextFormField() {
-    return TextFormField(
-      style: const TextStyle(
-          fontSize: 14.0,
-          color: CustomColors.mainColor,
-          fontWeight: FontWeight.bold),
-      controller: _usernameController,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.login, color: CustomColors.mainColor),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        labelText: "Username",
-        hintStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-        labelStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-      ),
-      autocorrect: false,
-    );
-  }
-
-  TextFormField _chipIdTextFormField() {
-    return TextFormField(
-      style: const TextStyle(
-          fontSize: 14.0,
-          color: CustomColors.mainColor,
-          fontWeight: FontWeight.bold),
-      controller: _chipIdController,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.login, color: CustomColors.mainColor),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        labelText: "ID appareil",
-        hintStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-        labelStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-      ),
-      autocorrect: false,
-    );
-  }
-
-  TextFormField _emailTextFormField() {
-    return TextFormField(
-      style: const TextStyle(
-          fontSize: 14.0,
-          color: CustomColors.mainColor,
-          fontWeight: FontWeight.bold),
-      controller: _emailController,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        prefixIcon:
-            const Icon(Icons.email_rounded, color: CustomColors.mainColor),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        labelText: "E-Mail",
-        hintStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-        labelStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-      ),
-      autocorrect: false,
-    );
-  }
-
-  TextFormField _passwordTextFormField() {
-    return TextFormField(
-      style: TextStyle(
-          fontSize: 14.0,
-          color: CustomColors.mainColor,
-          fontWeight: FontWeight.bold),
-      controller: _passwordController,
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        prefixIcon: const Icon(
-          Icons.lock,
-          color: CustomColors.mainColor,
-        ),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        labelText: "Mot de Passe",
-        hintStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-        labelStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-      ),
-      autocorrect: false,
-      obscureText: false,
-    );
-  }
-
-  TextFormField _phoneTextFormField() {
-    return TextFormField(
-      style: const TextStyle(
-          fontSize: 14.0,
-          color: CustomColors.mainColor,
-          fontWeight: FontWeight.bold),
-      controller: _phoneController,
-      keyboardType: TextInputType.phone,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.phone, color: CustomColors.mainColor),
-        border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            borderSide: BorderSide(color: CustomColors.mainColor)),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: CustomColors.mainColor),
-            borderRadius: BorderRadius.circular(30.0)),
-        contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        labelText: "Téléphone",
-        hintStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-        labelStyle: const TextStyle(
-            fontSize: 12.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.w500),
-      ),
-      autocorrect: false,
-    );
-  }
+  // TextFormField _usernameTextFormField() {
+  //   return TextFormField(
+  //     style: const TextStyle(
+  //         fontSize: 14.0,
+  //         color: CustomColors.mainColor,
+  //         fontWeight: FontWeight.bold),
+  //     controller: _usernameController,
+  //     keyboardType: TextInputType.text,
+  //     decoration: InputDecoration(
+  //       prefixIcon: const Icon(Icons.login, color: CustomColors.mainColor),
+  //       enabledBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //       labelText: "Username",
+  //       hintStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //       labelStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //     ),
+  //     autocorrect: false,
+  //   );
+  // }
+  //
+  // TextFormField _chipIdTextFormField() {
+  //   return TextFormField(
+  //     style: const TextStyle(
+  //         fontSize: 14.0,
+  //         color: CustomColors.mainColor,
+  //         fontWeight: FontWeight.bold),
+  //     controller: _chipIdController,
+  //     keyboardType: TextInputType.text,
+  //     decoration: InputDecoration(
+  //       prefixIcon: const Icon(Icons.login, color: CustomColors.mainColor),
+  //       enabledBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //       labelText: "ID appareil",
+  //       hintStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //       labelStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //     ),
+  //     autocorrect: false,
+  //   );
+  // }
+  //
+  // TextFormField _emailTextFormField() {
+  //   return TextFormField(
+  //     style: const TextStyle(
+  //         fontSize: 14.0,
+  //         color: CustomColors.mainColor,
+  //         fontWeight: FontWeight.bold),
+  //     controller: _emailController,
+  //     keyboardType: TextInputType.emailAddress,
+  //     decoration: InputDecoration(
+  //       prefixIcon:
+  //           const Icon(Icons.email_rounded, color: CustomColors.mainColor),
+  //       enabledBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //       labelText: "E-Mail",
+  //       hintStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //       labelStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //     ),
+  //     autocorrect: false,
+  //   );
+  // }
+  //
+  // TextFormField _passwordTextFormField() {
+  //   return TextFormField(
+  //     style: TextStyle(
+  //         fontSize: 14.0,
+  //         color: CustomColors.mainColor,
+  //         fontWeight: FontWeight.bold),
+  //     controller: _passwordController,
+  //     decoration: InputDecoration(
+  //       fillColor: Colors.white,
+  //       prefixIcon: const Icon(
+  //         Icons.lock,
+  //         color: CustomColors.mainColor,
+  //       ),
+  //       enabledBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //       labelText: "Mot de Passe",
+  //       hintStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //       labelStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //     ),
+  //     autocorrect: false,
+  //     obscureText: false,
+  //   );
+  // }
+  //
+  // TextFormField _phoneTextFormField() {
+  //   return TextFormField(
+  //     style: const TextStyle(
+  //         fontSize: 14.0,
+  //         color: CustomColors.mainColor,
+  //         fontWeight: FontWeight.bold),
+  //     controller: _phoneController,
+  //     keyboardType: TextInputType.phone,
+  //     decoration: InputDecoration(
+  //       prefixIcon: const Icon(Icons.phone, color: CustomColors.mainColor),
+  //       border: const OutlineInputBorder(
+  //           borderRadius: BorderRadius.all(Radius.circular(5)),
+  //           borderSide: BorderSide(color: CustomColors.mainColor)),
+  //       enabledBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderSide: const BorderSide(color: CustomColors.mainColor),
+  //           borderRadius: BorderRadius.circular(30.0)),
+  //       contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //       labelText: "Téléphone",
+  //       hintStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //       labelStyle: const TextStyle(
+  //           fontSize: 12.0,
+  //           color: CustomColors.mainColor,
+  //           fontWeight: FontWeight.w500),
+  //     ),
+  //     autocorrect: false,
+  //   );
+  // }
 }
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
-      {Key? key,
-      required this.controller,
-      required this.textInputAction,
-      required this.icon,
-      required this.keyboardType,
-      this.validator,
-      this.obscureText,
-      required this.label})
-      : super(key: key);
 
-  final TextEditingController controller;
-  final TextInputAction textInputAction;
-  final TextInputType keyboardType;
-  final String label;
-  final Widget? icon;
-  final bool? obscureText;
-  final VoidCallbackWithStringArgs? validator;
 
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-        style: const TextStyle(
-            fontSize: 16.0,
-            color: CustomColors.mainColor,
-            fontWeight: FontWeight.bold),
-        controller: controller,
-        textInputAction: textInputAction,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          prefixIcon: icon,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: CustomColors.mainColor),
-              borderRadius: BorderRadius.circular(5.0)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: CustomColors.mainColor),
-              borderRadius: BorderRadius.circular(05.0)),
-          contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
-          labelText: label,
-          hintStyle: const TextStyle(
-              fontSize: 12.0,
-              color: CustomColors.mainColor,
-              fontWeight: FontWeight.w500),
-          labelStyle: const TextStyle(
-              fontSize: 15.0,
-              color: CustomColors.mainColor,
-              fontWeight: FontWeight.w500),
-        ),
-        autocorrect: false,
-        validator: validator,
-        obscureText: obscureText ?? false);
-  }
-}
-
-///Création d'un type de fonction prennant un String comme argument.
-typedef VoidCallbackWithStringArgs = String? Function(String?)?;

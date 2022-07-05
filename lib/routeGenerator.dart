@@ -16,13 +16,11 @@ class RouteGenerator {
                       userRepository: context.read<UserRepository>()),
                   child: SignupScreen(),
                 ));
-        break;
       case MainPage.routeName:
-        return MaterialPageRoute(builder: (_) => MainPage());
-        break;
+        return MaterialPageRoute(builder: (_) => const MainPage());
 
       default:
-        return MaterialPageRoute(builder: (_) => MainPage());
+        return MaterialPageRoute(builder: (_) => const MainPage());
     }
   }
 }
