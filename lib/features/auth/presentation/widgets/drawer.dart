@@ -1,5 +1,5 @@
 import 'package:auth_template/features/auth/presentation/screen/login_form.dart';
-import 'package:auth_template/features/main-page.dart';
+import 'package:auth_template/features/daara/main-page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../themes/theme.dart';
@@ -9,10 +9,11 @@ import 'drawer_list_tyle.dart';
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        SizedBox(height: 60),
+        const CustomDrawerHeader(),
         DrawerListTile(
             imgpath: "home.png",
             name: "Home",
@@ -20,7 +21,7 @@ class MainDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => MainPage(),
+                  builder: (BuildContext context) => const MainPage(),
                 ),
               );
             }),
@@ -130,6 +131,28 @@ class MainDrawer extends StatelessWidget {
         // DrawerListTile(
         //     imgpath: "notification.png", name: "Notification", ontap: () {}),
       ],
+    );
+  }
+}
+
+class CustomDrawerHeader extends StatelessWidget {
+  const CustomDrawerHeader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const DrawerHeader(
+      child: SizedBox.shrink(),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          image: AssetImage(
+            "assets/images/DaaraScience.png",
+          ),
+          fit: BoxFit.fill,
+        ),
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auth_template/features/daara/presentation/bussiness_logic/nav_bottom_cubit.dart';
 import 'package:auth_template/routeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,8 @@ import 'features/auth/presentation/bussiness_logic/bloc/auth_bloc/auth.dart';
 import 'features/auth/presentation/bussiness_logic/bloc/signup_bloc/signup_bloc.dart';
 import 'features/auth/data/repository/repositories.dart';
 import 'features/auth/presentation/screen/login_screen.dart';
-import 'features/main-page.dart';
+import 'features/daara/main-page.dart';
+import 'features/quran/data/repositories/sourate_list_repo.dart';
 import 'locator.dart';
 import 'themes/theme.dart';
 
@@ -41,6 +43,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => UserRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => SourateListRepo(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -52,6 +57,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 SignupBloc(userRepository: context.read<UserRepository>()),
+          ),
+          BlocProvider(
+            create: (context) => NavBottomCubit(),
           ),
         ],
         child: MaterialApp(

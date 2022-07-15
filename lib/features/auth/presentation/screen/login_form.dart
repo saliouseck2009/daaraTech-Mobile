@@ -1,5 +1,5 @@
 import 'package:auth_template/features/auth/presentation/widgets/utils_screen.dart';
-import 'package:auth_template/features/main-page.dart';
+import 'package:auth_template/features/daara/main-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
